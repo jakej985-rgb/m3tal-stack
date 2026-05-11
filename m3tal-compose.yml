@@ -31,7 +31,7 @@ services:
     networks:
       - m3tal
     env_file:
-      - ../../.env
+      - ../m3tal-core/.env
     deploy:
       resources:
         limits:
