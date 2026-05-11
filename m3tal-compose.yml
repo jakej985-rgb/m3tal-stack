@@ -2,6 +2,7 @@ services:
   m3tal-dashboard:
     image: ghcr.io/jakej985-rgb/m3tal-godash:debug
     container_name: m3tal-dashboard
+    user: "${PUID:-1000}:${PGID:-1000}"
     volumes:
       - /mnt/config/m3tal/state:/docker/state
       - /mnt:/mnt
@@ -79,6 +80,7 @@ services:
   m3tal-api:
     image: ghcr.io/jakej985-rgb/m3tal-goback:debug
     container_name: m3tal-api
+    user: "${PUID:-1000}:${PGID:-1000}"
     depends_on:
       m3tal-core:
         condition: service_started
