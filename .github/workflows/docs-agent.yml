@@ -1,4 +1,4 @@
-name: M3tal Self-Documenting System
+name: M3tal Component Docs
 
 on:
   push:
@@ -15,8 +15,6 @@ jobs:
     steps:
       - name: 📥 Checkout repo
         uses: actions/checkout@v4
-        with:
-          submodules: recursive
 
       - name: 🧰 Setup Node
         uses: actions/setup-node@v4
@@ -27,13 +25,11 @@ jobs:
         run: |
           npm install js-yaml @google/generative-ai fs-extra
 
-      - name: 🔍 [1] Parse System State (Source of Truth)
+      - name: 🔍 [1] Parse Infrastructure State
         run: |
           node .github/scripts/parse-docker.js
-          node .github/scripts/parse-env.js
-          node .github/scripts/parse-m3tal.js
 
-      - name: 🧱 [2] Assemble Deterministic README
+      - name: 🧱 [2] Assemble README
         run: |
           node .github/scripts/build-readme.js
 
@@ -49,7 +45,7 @@ jobs:
         run: |
           node .github/scripts/doccritic.js
 
-      - name: 📝 Commit Documentation Changes
+      - name: 📝 Commit Documentation
         if: github.event_name == 'push'
         run: |
           git config user.name "m3tal-docs-bot"
@@ -57,6 +53,6 @@ jobs:
 
           if [[ `git status --porcelain README.md` ]]; then
             git add README.md
-            git commit -m "docs: auto-update from system state [skip ci]"
+            git commit -m "docs: auto-update [skip ci]"
             git push
           fi

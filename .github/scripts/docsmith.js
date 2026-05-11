@@ -8,38 +8,26 @@ const generatedReadme = fs.existsSync("README.generated.md")
   ? fs.readFileSync("README.generated.md", "utf-8")
   : "";
 
-if (!generatedReadme) {
-  console.error("README.generated.md not found.");
-  process.exit(1);
-}
-
 const prompt = `
-You are DocSmith, the M3TAL Ecosystem Aesthetic Architect.
+You are DocSmith, the M3TAL Infrastructure Architect.
 
 Task:
-Rewrite the following RAW generated README to be professional, high-density, and aligned with the "Mission Control" aesthetic.
+Polish the README for the M3TAL Stack (m3tal-stack).
 
 Rules:
-- DO NOT invent features or services.
-- PRESERVE all technical details from the raw README (ports, variable names, service paths).
-- STRUCTURE the information using modern markdown (callouts, clean tables, dividers).
-- IMPROVE the language to sound authoritative and professional.
-- ADD a standard M3TAL header and footer.
+- Professional, technical tone.
+- Emphasize standardization: /mnt paths, shared bridge network, and Traefik routing.
+- Explain its role as the foundation of the M3TAL runtime.
+- Keep it concise.
 
-RAW GENERATED README:
+RAW README:
 ${generatedReadme}
 `;
 
 async function run() {
-  try {
-    const result = await model.generateContent(prompt);
-    const output = result.response.text();
-    fs.writeFileSync("README.md", output);
-    console.log("README polished by DocSmith");
-  } catch (error) {
-    console.error("DocSmith failed:", error);
-    process.exit(1);
-  }
+  const result = await model.generateContent(prompt);
+  fs.writeFileSync("README.md", result.response.text());
+  console.log("README polished by DocSmith for M3TAL Stack.");
 }
 
 run();
