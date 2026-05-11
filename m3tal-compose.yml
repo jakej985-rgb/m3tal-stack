@@ -78,7 +78,9 @@ services:
       retries: 3
 
   m3tal-api:
-    image: ghcr.io/jakej985-rgb/m3tal-goback:debug
+    build:
+      context: ..
+      dockerfile: go-backend/Dockerfile
     container_name: m3tal-api
     user: "${PUID:-1000}:${PGID:-1000}"
     depends_on:
@@ -102,7 +104,8 @@ services:
 
   m3tal-core:
     build: 
-      context: ../m3tal-core
+      context: ..
+      dockerfile: m3tal-core/Dockerfile
     container_name: m3tal-core
     network_mode: host
     volumes:
