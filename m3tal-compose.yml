@@ -79,8 +79,8 @@ services:
 
   m3tal-api:
     build:
-      context: ..
-      dockerfile: go-backend/Dockerfile
+      context: ../..
+      dockerfile: cmd/api/Dockerfile
     container_name: m3tal-api
     user: "${PUID:-1000}:${PGID:-1000}"
     depends_on:
@@ -104,8 +104,8 @@ services:
 
   m3tal-core:
     build: 
-      context: ..
-      dockerfile: m3tal-core/Dockerfile
+      context: ../..
+      dockerfile: cmd/m3tal/Dockerfile
     container_name: m3tal-core
     network_mode: host
     volumes:
