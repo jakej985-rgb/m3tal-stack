@@ -31,8 +31,8 @@ services:
     security_opt:
       - no-new-privileges:true
     volumes:
-      - /mnt/config/traefik/dynamic:/etc/traefik/dynamic:ro
-      - /mnt:/mnt
+      - ${CONFIG_PATH:-/mnt/config}/traefik/dynamic:/etc/traefik/dynamic:ro
+      - ${BASE_STORAGE_PATH:-/mnt}:/mnt
     networks:
       - m3tal
     deploy:

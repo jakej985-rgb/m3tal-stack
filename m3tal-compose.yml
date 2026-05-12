@@ -4,8 +4,8 @@ services:
     container_name: m3tal-dashboard
     user: "${PUID:-1000}:${PGID:-1000}"
     volumes:
-      - /mnt/config/m3tal/state:/docker/state
-      - /mnt:/mnt
+      - ${CONFIG_PATH:-/mnt/config}/m3tal/state:/docker/state
+      - ${BASE_STORAGE_PATH:-/mnt}:/mnt
       - ./users.json:/docker/state/users.json:rw
     command: python3 server.py
     restart: unless-stopped
@@ -90,8 +90,8 @@ services:
     extra_hosts:
       - "m3tal-docker-proxy:127.0.0.1"
     volumes:
-      - /mnt/config/m3tal/state:/docker/state
-      - /mnt:/mnt
+      - ${CONFIG_PATH:-/mnt/config}/m3tal/state:/docker/state
+      - ${BASE_STORAGE_PATH:-/mnt}:/mnt
     environment:
       - TZ=America/Denver
       - STATE_DIR=/docker/state
@@ -109,14 +109,14 @@ services:
     container_name: m3tal-core
     network_mode: host
     volumes:
-      - /mnt/config/m3tal/state:/docker/state
+      - ${CONFIG_PATH:-/mnt/config}/m3tal/state:/docker/state
       - /sys:/sys:ro
       - /proc:/proc:ro
       - /usr/bin/radeontop:/usr/bin/radeontop:ro
       - /usr/sbin/smartctl:/usr/sbin/smartctl:ro
       - /sys/kernel/debug:/sys/kernel/debug:ro
       - /:/host:ro
-      - /mnt:/mnt
+      - ${BASE_STORAGE_PATH:-/mnt}:/mnt
     devices:
       - /dev/dri:/dev/dri
     privileged: true
