@@ -34,7 +34,7 @@ services:
       - "traefik.http.routers.flaresolverr.service=flaresolverr"
       - "traefik.http.services.flaresolverr.loadbalancer.server.port=8191"
       
-      - "traefik.docker.network=m3tal"
+      - "traefik.docker.network=proxy"
       - "m3tal.stack=network"
       - "m3tal.role=edge"
     ports:
@@ -44,7 +44,7 @@ services:
       - "6881:6881" # qBittorrent Bittorrent
       - "6881:6881/udp"
     networks:
-      - m3tal
+      - proxy
     env_file:
       - ../../.env
     deploy:
@@ -55,8 +55,8 @@ services:
     restart: unless-stopped
 
 networks:
-  m3tal:
-    name: m3tal
+  proxy:
+    name: proxy
     driver: bridge
   default:
     name: none
