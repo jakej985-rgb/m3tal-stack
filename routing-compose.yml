@@ -63,6 +63,30 @@ services:
           memory: 150M
     restart: unless-stopped
 
+  traefik-manager:
+    image: ghcr.io/chr0nzz/traefik-manager:latest
+    container_name: traefik-manager
+    user: "${PUID:-1000}:${PGID:-1000}"
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      - COOKIE_SECURE=false
+      - TM_TRAEFIK_URL=http://traefik:8080
+    volumes:
+      - ${CONFIG_PATH:-/mnt/config}/traefik/dynamic/dynamic.yml:/app/config/dynamic.yml
+      - ${CONFIG_PATH:-/mnt/config}/traefik-manager:/app/config
+      - ${CONFIG_PATH:-/mnt/config}/traefik-manager/backups:/app/backups
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik-manager.rule=Host(`tm.${DOMAIN:-localhost}`)"
+      - "traefik.http.routers.traefik-manager.entrypoints=web"
+      - "traefik.http.services.traefik-manager.loadbalancer.server.port=5000"
+      - "traefik.docker.network=proxy"
+      - "m3tal.stack=routing"
+
 networks:
   proxy:
     external: true
