@@ -228,7 +228,7 @@ services:
       - "m3tal.stack=media"
       - "m3tal.role=internal"
     networks:
-      - m3tal
+      - proxy
     env_file:
       - ../../.env
     deploy:
