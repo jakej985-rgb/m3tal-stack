@@ -1,0 +1,19 @@
+services:
+  ollama:
+    image: ollama/ollama
+    container_name: ollama-qwen3-coder-next-cloud
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama:/root/.ollama
+    restart: unless-stopped
+    command: >
+      sh -c "
+        ollama serve &
+        sleep 5 &&
+        ollama pull qwen3-coder-next:cloud &&
+        tail -f /dev/null
+      "
+
+volumes:
+  ollama:
