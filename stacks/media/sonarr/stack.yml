@@ -1,0 +1,13 @@
+name: sonarr
+category: media
+description: Sonarr TV automation
+version: 1.0.1
+requires:
+  - docker
+optional:
+  - traefik
+ports:
+  - 8989
+resources:
+  memory: 512m
+  cpu: 0.5
