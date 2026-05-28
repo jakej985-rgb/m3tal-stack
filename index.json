@@ -1,0 +1,25 @@
+{
+  "stacks": [
+    {
+      "name": "sonarr",
+      "category": "media",
+      "description": "Sonarr TV automation",
+      "version": "1.0.1",
+      "requires": [
+        "docker"
+      ],
+      "optional": [
+        "traefik"
+      ],
+      "ports": [
+        8989
+      ],
+      "resources": {
+        "memory": "512m",
+        "cpu": 0.5
+      },
+      "download_url": "https://raw.githubusercontent.com/jakej985-rgb/m3tal-stacks/main/stacks/media/sonarr/docker-compose.yml",
+      "manifest_url": "https://raw.githubusercontent.com/jakej985-rgb/m3tal-stacks/main/stacks/media/sonarr/stack.yml"
+    }
+  ]
+}
