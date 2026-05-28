@@ -1,0 +1,11 @@
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    user: "1000:1000"  # change to your UID:GID if needed
+    network_mode: "host"  # easiest for DLNA / discovery
+    volumes:
+      - ./config:/config
+      - ./cache:/cache
+      - ./media:/mnt
+    restart: unless-stopped

@@ -19,7 +19,7 @@ services:
       - /mnt/config/qbittorrent:/config
       - /mnt:/mnt
     env_file:
-      - ../../.env
+      - ./media.env
     labels:
       - "m3tal.stack=media"
       - "m3tal.role=vpn"
@@ -44,7 +44,7 @@ services:
       - /mnt:/mnt
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.komga.rule=Host(`komga.${DOMAIN:?DOMAIN not set}`)"
+      - "traefik.http.routers.komga.rule=Host(`komga.${DOMAIN:-}`)"
       - "traefik.http.routers.komga.entrypoints=web"
       - "traefik.http.services.komga.loadbalancer.server.port=25600"
       - "traefik.docker.network=proxy"
@@ -53,7 +53,7 @@ services:
     networks:
       - proxy
     env_file:
-      - ../../.env
+      - ./media.env
     deploy:
       resources:
         limits:
@@ -75,7 +75,7 @@ services:
       - /mnt:/mnt
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.jellyseerr.rule=Host(`jellyseerr.${DOMAIN:?DOMAIN not set}`)"
+      - "traefik.http.routers.jellyseerr.rule=Host(`jellyseerr.${DOMAIN:-}`)"
       - "traefik.http.routers.jellyseerr.entrypoints=web"
       - "traefik.http.services.jellyseerr.loadbalancer.server.port=5055"
       - "traefik.docker.network=proxy"
@@ -84,7 +84,7 @@ services:
     networks:
       - proxy
     env_file:
-      - ../../.env
+      - ./media.env
     deploy:
       resources:
         limits:
