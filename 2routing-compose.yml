@@ -50,7 +50,12 @@ services:
   cloudflared:
     image: cloudflare/cloudflared:latest
     container_name: cloudflared
-    command: tunnel --no-autoupdate run --token ${CF_TUNNEL_TOKEN:-}
+    command: tunnel --no-autoupdate run
+    environment:
+      - TUNNEL_TOKEN=${CF_TUNNEL_TOKEN:-}
+    volumes:
+      - ./cloudflared-config.yml:/etc/cloudflared/config.yml:ro
+      - ${CONFIG_PATH:-/mnt/config}/cloudflared/credentials.json:/etc/cloudflared/credentials.json:ro
     networks:
       - proxy
     env_file:
@@ -68,7 +73,6 @@ services:
   traefik-manager:
     image: ghcr.io/chr0nzz/traefik-manager:latest
     container_name: traefik-manager
-    user: "${PUID:-1000}:${PGID:-1000}"
     restart: unless-stopped
     ports:
       - "5000:5000"

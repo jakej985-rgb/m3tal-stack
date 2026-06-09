@@ -37,7 +37,6 @@ services:
           cpus: '0.5'
           memory: 250M
 
-  # Security Hardening: Docker Socket Proxy
 networks:
   proxy:
     external: true
