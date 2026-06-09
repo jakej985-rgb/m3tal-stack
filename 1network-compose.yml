@@ -33,7 +33,6 @@ services:
       - "traefik.http.routers.flaresolverr.entrypoints=web"
       - "traefik.http.routers.flaresolverr.service=flaresolverr"
       - "traefik.http.services.flaresolverr.loadbalancer.server.port=8191"
-      
       - "traefik.docker.network=proxy"
       - "m3tal.stack=network"
       - "m3tal.role=edge"
